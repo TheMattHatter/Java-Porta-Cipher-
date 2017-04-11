@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.net.URL;
 
-public class URLParser {
+public class URLParser implements Parserator {
 	
 	private BufferedReader br = null; //Provides efficient reading of all characters, lines etc. in the URL
 	
