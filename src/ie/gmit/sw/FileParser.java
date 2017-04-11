@@ -11,18 +11,6 @@ public class FileParser implements Parserator {
     
     private List<String> fileContents = new ArrayList<String>(); //ArrayList created to store all contents of parsed File
     
-    
-	
-	/***************************************
-	 
-	 ======================
-	 Section 1 File Parsing
-	 ======================
-	  
-	 *Default constructors and File Parsing
-	 
-	 
-	****************************************/
 	
 	//Default constructor//
 	public FileParser()
@@ -80,7 +68,7 @@ public class FileParser implements Parserator {
 			System.out.println("\nFile successfully read!");  //Printed if file parse is successfully
 
 	        
-		}//End if
+		}
 		
 		else
 		{
