@@ -1,5 +1,6 @@
 package ie.gmit.sw;
 
+import java.io.*;
 import java.util.*;
 
 public class Menu {
@@ -7,7 +8,10 @@ public class Menu {
 	private boolean menuExit = false; //Boolean for use of exiting Main Menu
 
 	private Parserator p1; //Parserator manipulated later to be either of type FileParser or of type URLParser
-
+	private String key = "";
+	private String plainText = "";
+	//private String key = "";
+	
 	private Scanner sc = new Scanner(System.in); //Scanner used by all methods
 	
 	
@@ -123,7 +127,7 @@ public class Menu {
 			break;
 		
 		case 2:
-			//Encrypt(); //Search options for File/URL
+			encrypt(); //Search options for File/URL
 			break;
 		
 		case 3:
@@ -152,6 +156,8 @@ public class Menu {
 		String scheme1 = "http://"; //Scheme 1 for URL parsing
 		String scheme2 = "https://"; //Scheme 2 for URL parsing
 		
+		System.out.print("\nPlease enter the key to encypt and decrypt: "); //Asking User for a file/URL
+		key = sc.next();
 		
 			System.out.print("\nPlease enter a file destination or a URL: "); //Asking User for a file/URL
 			parseChoice = sc.next();
@@ -179,5 +185,15 @@ public class Menu {
 		
 	}//End parseMenu
 	
+	private void encrypt()
+	{
+		p1.replace();
+		plainText = p1.joinStrings();
+		String encryptedText = p1.encrypt(plainText, key);
+		
+		System.out.println(encryptedText);
+		
+	}
 	
 }
+

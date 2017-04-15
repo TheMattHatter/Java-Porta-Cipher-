@@ -4,10 +4,10 @@ public class Runner {
 	
 	public static void main(String[] args) 
 	{
+		Menu m1 = new Menu();
 		
-		Menu m1 = new Menu(); //Create a menu and print header
-		
-		m1.runMenu(); //Runs home menu
+		m1.runMenu();
 		
 	}//End main//
 }
+
