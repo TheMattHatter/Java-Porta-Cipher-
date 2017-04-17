@@ -28,50 +28,48 @@ public class FileParser implements Parserator {
 	}
 	
 	//Parserator (interface) method//
-	public void parse(String s1)
+	public void parse(String location)
 	{
-		this.parse(new File (s1)); //Casting String as file and parsing it
+		this.parse(new File (location)); //Casting String as file and parsing it
 	}
 	
 	//File parsing//
-	public void parse(File file)
+	public void parse(File location)
 	{
 		
-		if(file.isFile()) //File validation
+		if(location.isFile()) //File validation
 		{
 			
 			try
 			{
-				br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(location)));
 			}
 			
 			catch(FileNotFoundException e)
 			{
 				e.printStackTrace();
 			}
-			
-			
+	        
 	        //Try to separate words and store in the ArrayList
 	        try
 	        {
 		        while((s = br.readLine()) != null)
-		  	  {	
-		        	
-			      String [] str = s.split("[\\s]+"); //Groups all white spaces as a delimiter
-		  		  
+		  	  {		  
+		  		  String [] str = s.split("\\s+"); //Ensure proper spacing
+		  		 
 		  		  fileContents.addAll(Arrays.asList(str));  //Adding all strings to the ArrayList
 		  	  }
 		        
 	        }
 	        
+		  	  
 	        catch(IOException e)
 	        {
 	  		 e.printStackTrace();
 	        }
 	        
 			System.out.println("\nFile successfully read!");  //Printed if file parse is successfully
-
-	        
+  
 		}
 		
 		else
@@ -217,4 +215,6 @@ public class FileParser implements Parserator {
 		return encryptedText;
 		//System.out.println("\nEncrypted text: " + encryptedText);
 	}
+	
+	
 }

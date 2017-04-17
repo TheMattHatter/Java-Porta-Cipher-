@@ -21,26 +21,25 @@ public class URLParser implements Parserator {
     	
     }
     
-    public void parse(String s1) //Interface method
+    public void parse(String location) //Interface method
     {
 			//Read in the URL
 	        try
 	        {   
-	        	URL url1 = new URL(s1); //New instance of URL
+	        	URL url = new URL(location);
 	        	
-	    	  	br = new BufferedReader(new InputStreamReader(url1.openStream())); //Need to covert to InputStreamReader so the BufferedReader can read it
-	  
-	    
-		        while((s = br.readLine()) != null) //Try to separate words and store in the ArrayList
+	    	  	br = new BufferedReader(new InputStreamReader(url.openStream())); //Need to covert to InputStreamReader so the BufferedReader can read it
+	    	  	
+	        	while((s = br.readLine()) != null) //Try to separate words and store in the ArrayList
 		  	  	{		  
-		  		  String [] str = s.split("\\s+"); //Groups all white spaces as a delimiter
+		  		  String [] str = s.split("\\s+"); //Adding all strings to the ArrayList with proper spacing
 		  		  
 		  		  urlContents.addAll(Arrays.asList(str)); //Adding all strings to the ArrayList
 		  	  	}
 		        
 		        br.close();
 		        
-		        System.out.println("\nUrl successfully read!"); //If URL read is successful
+		        System.out.println("\nUrl successfully read!");
 	        } 
 	        
 		  	  
@@ -50,7 +49,6 @@ public class URLParser implements Parserator {
 	        }
 	        
 			
-	        
 	}
     
 	public void replace()

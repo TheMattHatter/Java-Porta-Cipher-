@@ -1,19 +1,16 @@
 package ie.gmit.sw;
 
-import java.io.*;
 import java.util.*;
 
 public class Menu {
 
-	private boolean menuExit = false; //Boolean for use of exiting Main Menu
-
-	private Parserator p1; //Parserator manipulated later to be either of type FileParser or of type URLParser
-	private String key = "";
-	private String plainText = "";
-	//private String key = "";
-	
 	private Scanner sc = new Scanner(System.in); //Scanner used by all methods
+	private boolean menuExit = false; //Boolean for use of exiting Main Menu
 	
+	private String key = "";
+	private String location = "";
+	private String filename = "";
+
 	
 	/***************************************
 	 
@@ -123,11 +120,11 @@ public class Menu {
 		switch (choice) //Actions for the menu choices
 		{
 		case 1:
-			parse(); //Parse Menu to determine File/URL
+			Parse.parseString(getLocation()); //Parse Menu to determine File/URL
 			break;
 		
 		case 2:
-			encrypt(); //Search options for File/URL
+			//Encrypt
 			break;
 		
 		case 3:
@@ -149,51 +146,30 @@ public class Menu {
 	}//End performAction//
 	
 	
-	private void parse() 
+	public String getLocation()
 	{
-		String parseChoice; //String that holds either file destination or URL
+		System.out.print("\nPlease enter a file destination or a URL: "); //Asking User for a file/URL
+		location = sc.next();
 		
-		String scheme1 = "http://"; //Scheme 1 for URL parsing
-		String scheme2 = "https://"; //Scheme 2 for URL parsing
-		
-		System.out.print("\nPlease enter the key to encypt and decrypt: "); //Asking User for a file/URL
+		return location;
+	}
+	
+	public String getKey()
+	{
+		System.out.print("\nPlease enter a file or URL: ");
 		key = sc.next();
 		
-			System.out.print("\nPlease enter a file destination or a URL: "); //Asking User for a file/URL
-			parseChoice = sc.next();
-			
-			if(parseChoice.startsWith(scheme1) || parseChoice.startsWith(scheme2)) //If input is a URL
-			{
-				try
-				{
-					p1 = new URLParser(); //Instance of URLParser created 
-					p1.parse(parseChoice);
-				}
-				
-				catch(NullPointerException e) //Catching NullPointerException if an invalid URL is entered
-				{
-					System.out.println("Invalid URL please try again");
-				}
-			}
-			
-			
-			else //If input is a file
-			{
-				p1 = new FileParser(); //Instance of FileParser created 
-				p1.parse(parseChoice);
-			}		
-		
-	}//End parseMenu
-	
-	private void encrypt()
-	{
-		p1.replace();
-		plainText = p1.joinStrings();
-		String encryptedText = p1.encrypt(plainText, key);
-		
-		System.out.println(encryptedText);
-		
+		return key;
 	}
+	
+	public String getFilename()
+	{
+		System.out.print("\nPlease enter filename for the encrypted text: ");
+		filename = sc.next();
+		
+		return key;
+	}
+	
 	
 }
 

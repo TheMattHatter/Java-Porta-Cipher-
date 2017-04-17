@@ -10,7 +10,6 @@ public interface Parserator {
 	
 	public void replace();
 	
-	//public String decrypt(String key, String plainText);
 
 	
 }
