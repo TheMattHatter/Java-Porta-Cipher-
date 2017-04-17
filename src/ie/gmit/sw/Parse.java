@@ -1,36 +1,54 @@
 package ie.gmit.sw;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 public class Parse {
 	
-	private static Parserator p1; //Parserator upcasted to either FileParser or URLParser
+	private static BufferedReader br; //Buffered reader that will be returned
 	private static String scheme1 = "http://"; //Scheme 1 for URL parsing
 	private static String scheme2 = "https://"; //Scheme 2 for URL parsing
 	
-	public static void parseString(String location) 
-	{	
+	public static BufferedReader parseLocation(String location)
+	{
 		
-		if(location.startsWith(scheme1) || location.startsWith(scheme2)) //If input is a URL
+		try
 		{
-			try
+			if(location.startsWith(scheme1) || location.startsWith(scheme2)) //Check if file is a url
 			{
-				p1 = new URLParser(); //Instance of URLParser created 
-				p1.parse(location); //Calls parse method to parse the file
+				URL url = new URL(location);
+				
+				br = new BufferedReader(new InputStreamReader(url.openStream())); //Need to covert to InputStreamReader so the BufferedReader can read it
+				
+				System.out.println("\nURL successfully read!");  //Printed if file parse is successfully
 			}
 			
-			catch(NullPointerException e) //Catching NullPointerException if an invalid URL is entered
+			else
 			{
-				System.out.println("Invalid URL please try again"); //Printed if url could not be parsed
+				File f = new File(location);
+				
+				if(f.isFile()) //Check if location is a file
+				{
+					br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+					
+					System.out.println("\nFile successfully read!");  //Printed if file parse is successfully
+				}
+				
 			}
+				
 		}
 		
+        catch(IOException e)
+        {
+        	System.out.println("\nInvalid file or URL please try again"); //If URL read is unsuccessful
+        }
 		
-		else //If input is a file
-		{
-			p1 = new FileParser(); //Instance of FileParser created 
-			p1.parse(location);
-		}		
-		
-	}//End parseMenu*/
+		return br;
+	}
 	
 	
 

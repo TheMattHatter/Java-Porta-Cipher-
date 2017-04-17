@@ -1,5 +1,6 @@
 package ie.gmit.sw;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Menu {
@@ -67,7 +68,15 @@ public class Menu {
 				
 			choice = getChoice(); //Value of getChoice method is stored in choice
 				
-			performAction(choice); //Perform an action depending on menu choice 
+			try 
+			{
+				performAction(choice); //Perform an action depending on menu choice 
+			} 
+			
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
 			
 		}
 		
@@ -114,17 +123,17 @@ public class Menu {
 	
 	
 	//Menu actions depending on choice//
-	private void performAction(int choice)
+	private void performAction(int choice) throws IOException
 	{
 		
 		switch (choice) //Actions for the menu choices
 		{
 		case 1:
-			Parse.parseString(getLocation()); //Parse Menu to determine File/URL
+			Parse.parseLocation(getLocation()); //Parse Menu to determine File/URL
 			break;
 		
 		case 2:
-			//Encrypt
+			Encrypt.runEncryption(location, getKey(), getFilename());
 			break;
 		
 		case 3:
@@ -156,7 +165,7 @@ public class Menu {
 	
 	public String getKey()
 	{
-		System.out.print("\nPlease enter a file or URL: ");
+		System.out.print("\nPlease enter a key to encrypt with: ");
 		key = sc.next();
 		
 		return key;
