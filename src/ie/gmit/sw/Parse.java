@@ -1,55 +1,48 @@
 package ie.gmit.sw;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 
 public class Parse {
 	
-	private static BufferedReader br; //Buffered reader that will be returned
-	private static String scheme1 = "http://"; //Scheme 1 for URL parsing
-	private static String scheme2 = "https://"; //Scheme 2 for URL parsing
+	private static BufferedReader br;
+	private static final String SCHEME1 = "http://"; //Scheme 1 for URL validation
+	private static final String SCHEME2 = "https://"; //Scheme 2 for URL validation
 	
-	public static BufferedReader parseLocation(String location)
-	{
-		
+	// Big O: Best = O(1). Worst = 0(1)
+	// The rational behind this estimation is that it is mainly comparisons in the if else
+	// which are traditionally O(1)
+	public static BufferedReader parseLocation(String location, String key) 
+	{		
 		try
 		{
-			if(location.startsWith(scheme1) || location.startsWith(scheme2)) //Check if file is a url
+			if(location.startsWith(SCHEME1) || location.startsWith(SCHEME2)) //If input is a URL
 			{
-				URL url = new URL(location);
-				
-				br = new BufferedReader(new InputStreamReader(url.openStream())); //Need to covert to InputStreamReader so the BufferedReader can read it
-				
-				System.out.println("\nURL successfully read!");  //Printed if file parse is successfully
+				URL url = new URL(location); //New instance of URL	        	
+			  	br = new BufferedReader(new InputStreamReader(url.openStream())); //Wrap an InputStreamReader with br and open a URL stream
+			  	
+			  	System.out.println("\nURL successfully read");
 			}
-			
-			else
-			{
-				File f = new File(location);
 				
-				if(f.isFile()) //Check if location is a file
+			else //If input is a file
+			{
+				File file = new File(location); //New instance of URL
+				
+				if(file.isFile()) //Check if the input is a file
 				{
-					br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-					
-					System.out.println("\nFile successfully read!");  //Printed if file parse is successfully
+					br = new BufferedReader(new InputStreamReader(new FileInputStream(file))); //Wrap an InputStreamReader with br and open a FileInputStream
 				}
 				
+			  	System.out.println("\nFile successfully read");
 			}
-				
 		}
 		
-        catch(IOException e)
-        {
-        	System.out.println("\nInvalid file or URL please try again"); //If URL read is unsuccessful
-        }
-		
-		return br;
+		catch(IOException e)
+		{
+			e.printStackTrace(); //Prints the stack trace of the Exception to System.err.
+		}
+			
+		return br; //Return the BufferedReader
 	}
 	
-	
-
 }

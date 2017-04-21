@@ -1,17 +1,17 @@
 package ie.gmit.sw;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Menu {
 
-	private Scanner sc = new Scanner(System.in); //Scanner used by all methods
 	private boolean menuExit = false; //Boolean for use of exiting Main Menu
-	
-	private String key = "";
-	private String location = "";
-	private String filename = "";
 
+	private String decryptLocation = ""; //File/URL location to decrypt
+	private String location = ""; //File/URL location to encrypt
+	private String key = ""; //Key to encrypt/decrypt the file/URL with
+
+	private Scanner sc = new Scanner(System.in); //Scanner for reading in input
+	
 	
 	/***************************************
 	 
@@ -55,7 +55,7 @@ public class Menu {
 		
 	}
 	
-	//Runs the actual menu
+	//Runs the actual menu//
 	public void runMenu()
 	{
 		int choice; //Integer to store menu choice
@@ -68,15 +68,7 @@ public class Menu {
 				
 			choice = getChoice(); //Value of getChoice method is stored in choice
 				
-			try 
-			{
-				performAction(choice); //Perform an action depending on menu choice 
-			} 
-			
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
+			performAction(choice); //Perform an action depending on menu choice 
 			
 		}
 		
@@ -84,7 +76,7 @@ public class Menu {
 	}
 	
 	
-	//Gets menu choice
+	//Gets menu choice//
 	private int getChoice()
 	{	
 		
@@ -118,26 +110,29 @@ public class Menu {
 			
 		}
 		
-		return choice;
+		return choice; //Returns menu choice
 	}
 	
 	
 	//Menu actions depending on choice//
-	private void performAction(int choice) throws IOException
+	private void performAction(int choice)
 	{
 		
 		switch (choice) //Actions for the menu choices
 		{
 		case 1:
-			Parse.parseLocation(getLocation()); //Parse Menu to determine File/URL
+			Parse.parseLocation(getLocation(),getKey()); //Parse Menu to determine File/URL
 			break;
 		
 		case 2:
-			Encrypt.runEncryption(location, getKey(), getFilename());
+			//long startTime = System.currentTimeMillis();
+			Encrypt.encryptFile(location, key); //Encrypt a file/URL
+			//long endTime = System.currentTimeMillis();
+			//System.out.println("Encryption took "+(endTime-startTime)+" ms"); //UNCOMMENT THESE TO CHECK THE ENCRYPTION TIME
 			break;
 		
 		case 3:
-			//Decrypt(); //Stat options for File/URL
+			Decrypt.decryptFile(getDecryptLocation(), getKey()); //Decrypt a file/URL
 			break;
 			
 		case 4:
@@ -149,36 +144,38 @@ public class Menu {
 		default:
 			System.out.println("An unknown error has occured, please try again!"); //Default in the case of an error
 			
-		}//End switch(choice)//
+		}
 		
 		
-	}//End performAction//
+	}
 	
 	
-	public String getLocation()
+	//Gets user input Key//
+	private String getKey() 
 	{
-		System.out.print("\nPlease enter a file destination or a URL: "); //Asking User for a file/URL
+		System.out.print("\nPlease enter a key to encrypt: ");
+		key = sc.next();
+		
+		return key;
+	}
+
+	//Gets user input location to encrypt//
+	private String getLocation()
+	{
+		System.out.print("\nPlease enter a file directory or URL to encrypt: ");
 		location = sc.next();
 		
 		return location;
 	}
 	
-	public String getKey()
+	//Gets user input to decrypt//
+	private String getDecryptLocation()
 	{
-		System.out.print("\nPlease enter a key to encrypt with: ");
-		key = sc.next();
+		System.out.print("\nPlease enter a file directory or URL to decrypt: ");
+		decryptLocation = sc.next();
 		
-		return key;
+		return decryptLocation;
 	}
-	
-	public String getFilename()
-	{
-		System.out.print("\nPlease enter filename for the encrypted text: ");
-		filename = sc.next();
-		
-		return key;
-	}
-	
 	
 }
 
